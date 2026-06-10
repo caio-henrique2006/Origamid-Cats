@@ -1,45 +1,61 @@
 import React from "react";
-import "../style/Login.css";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Auth } from "../services/auth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const auth = new Auth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email || !password) return;
+    try {
+      await auth.login(email, password);
+      console.log("Successful Login", { email });
+      navigate("/");
+    } catch (e) {
+      console.error("Error logging in user:", e);
+    }
+  };
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (await auth.isAuthenticated()) {
+        navigate("/");
+      }
+    };
+    checkAuth();
+  }, []);
+
   return (
-    <div className="login-page">
-      <div className="login-page__left" aria-hidden="true" />
-      <div className="login-page__right">
-        <div className="login-page__box">
-          <h2 className="login-page__title">Welcome back</h2>
-          <div className="login-page__group">
-            <label htmlFor="email" className="login-page__label">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              className="login-page__input"
-            />
-          </div>
-          <div className="login-page__group">
-            <label htmlFor="password" className="login-page__label">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              className="login-page__input"
-            />
-          </div>
-          <div className="login-page__actions">
-            <button className="login-page__button login-page__button--login">
-              Login
-            </button>
-            <button className="login-page__button login-page__button--register">
-              Register
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <section>
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+      </form>
+      <Link to="/register">Register</Link>
+    </section>
   );
 };

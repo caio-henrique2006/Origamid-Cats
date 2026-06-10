@@ -1,9 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Auth } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+  const auth = new Auth();
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await auth.logout();
+      navigate("/login");
+    } catch (e) {
+      console.error("Error logging out user:", e);
+    }
+  };
 
   return (
     <header style={styles.header}>
@@ -15,6 +26,9 @@ export const Header = () => {
           <Link style={styles.link} to="/login">
             Login
           </Link>
+          <button onClick={handleLogout} style={styles.link}>
+            Logout
+          </button>
         </nav>
       </div>
     </header>
