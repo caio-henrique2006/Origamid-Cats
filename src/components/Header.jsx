@@ -23,6 +23,9 @@ export const Header = () => {
           <Link to="/">Origamid Cats</Link>
         </h1>
         <nav>
+          <Link style={styles.link} to="/profile">
+            Profile
+          </Link>
           <Link style={styles.link} to="/login">
             Login
           </Link>

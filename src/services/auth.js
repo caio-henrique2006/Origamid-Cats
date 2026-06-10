@@ -1,14 +1,14 @@
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from "./supabase";
 
 export class Auth {
   async isAuthenticated() {
     const { data } = await supabase.auth.getSession();
     return !!data?.session;
+  }
+
+  async getUserID() {
+    const { data } = await supabase.auth.getUser();
+    return data?.user?.id;
   }
 
   async login(email, password) {
