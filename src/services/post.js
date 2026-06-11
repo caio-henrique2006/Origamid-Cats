@@ -13,7 +13,7 @@ export class Post {
       throw new Error("Oxi, não tá logado ?");
     }
 
-    let { data, error } = supabase
+    let { data, error } = await supabase
       .from("poste")
       .select("*")
       .eq("user_id", user_id)
@@ -23,7 +23,7 @@ export class Post {
     return data;
   }
 
-  async sendPost({ userId, text, title, local, imageFile }) {
+  async sendPost({ userId, description, title, local, imageFile }) {
     const user_id = await this.auth.getUserID();
     if (!user_id) {
       throw new Error("Oxi, não tá logado ?");
@@ -37,7 +37,7 @@ export class Post {
         {
           user_id: user_id,
           title: title,
-          description: text,
+          description: description,
           local: local,
           image_url: publicUrl,
         },

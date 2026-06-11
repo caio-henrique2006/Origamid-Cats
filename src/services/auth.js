@@ -11,6 +11,11 @@ export class Auth {
     return data?.user?.id;
   }
 
+  async getUserName() {
+    const { data } = await supabase.auth.getUser();
+    return data?.user?.user_metadata?.full_name || "Usuário Desconhecido";
+  }
+
   async login(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
