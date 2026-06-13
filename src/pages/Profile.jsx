@@ -3,6 +3,8 @@ import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Post } from "../services/post";
 import { Modal } from "../components/Modal";
+import { Card } from "../components/Card";
+import "../style/home.css";
 
 export const Profile = () => {
   const [posts, setPosts] = useState([]);
@@ -35,23 +37,23 @@ export const Profile = () => {
     fetchPosts();
   }, []);
   return (
-    <>
-      {modalOpen ? (
-        <Modal data={selectedPost} setModalOpen={setModalOpen} />
-      ) : null}
-      <Link to="add">Add Post</Link>
-      <div>
+    <div className="home">
+      <nav className="home-nav">
+        <p> Minha Conta </p>
+        <div>
+          <Link to="/profile"> Meus Postes </Link>
+          <Link to="/profile/add"> Criar Poste </Link>
+        </div>
+      </nav>
+      <div className="home-page">
         {loading ? (
-          <p>Loading...</p>
+          <p>Carregando...</p>
+        ) : posts.length > 0 ? (
+          posts.map((post) => <Card key={post.id} post={post} />)
         ) : (
-          posts.map((post) => (
-            <div key={post.id} onClick={() => handleModalOpen(post)}>
-              <h3>{post.title}</h3>
-              <img width="200px" src={post.image_url} alt={post.title} />
-            </div>
-          ))
+          <p>Nenhum post encontrado.</p>
         )}
       </div>
-    </>
+    </div>
   );
 };

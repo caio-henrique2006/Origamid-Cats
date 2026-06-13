@@ -3,6 +3,13 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
+.register-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
 
 .login-page__media {
 	min-height: 100vh;

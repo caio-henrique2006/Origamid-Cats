@@ -23,6 +23,16 @@ export class Post {
     return data;
   }
 
+  async getAllPosts() {
+    let { data, error } = await supabase
+      .from("poste")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return data;
+  }
+
   async sendPost({ userId, description, title, local, imageFile }) {
     const user_id = await this.auth.getUserID();
     if (!user_id) {

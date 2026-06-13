@@ -1,0 +1,41 @@
+.home {
+
+    padding-right: 30%;
+    padding-left: 30%;
+}
+
+.home-nav {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    gap: 24px;
+    padding: 24px 48px 0;
+}
+
+.home-nav p {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.home-nav div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.home-nav a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+}
+
+.home-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 48px;
+    gap: 12px;
+}
