@@ -2,10 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Auth } from "../services/auth";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import "../style/header.css";
 
 export const Header = () => {
   const auth = new Auth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -16,53 +22,47 @@ export const Header = () => {
     }
   };
 
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (await auth.isAuthenticated()) {
+        setIsAuthenticated(true);
+      }
+    };
+    checkAuth();
+  }, [location.pathname]);
+
   return (
-    <header style={styles.header}>
-      <div style={styles.container}>
-        <h1 style={styles.logo}>
-          <Link to="/">Origamid Cats</Link>
-        </h1>
-        <nav>
-          <Link style={styles.link} to="/profile">
-            Profile
+    <header className="header">
+      <div className="header__container">
+        <img
+          src="./logo.png"
+          alt="Logo"
+          className="header__logo"
+          width="50"
+          onClick={() => navigate("/")}
+        />
+        <nav className="header__nav">
+          <Link className="header__link" to="/profile">
+            Perfil
           </Link>
-          <Link style={styles.link} to="/login">
-            Login
-          </Link>
-          <button onClick={handleLogout} style={styles.link}>
-            Logout
-          </button>
+          {isAuthenticated ? (
+            <img
+              src="./logout.png"
+              width="20"
+              height="20"
+              alt="Logout"
+              onClick={handleLogout}
+              style={{ cursor: "pointer", marginLeft: 16 }}
+            />
+          ) : (
+            <Link className="header__link" to="/login">
+              Login
+            </Link>
+          )}
         </nav>
       </div>
     </header>
   );
-};
-
-const styles = {
-  header: {
-    background: "#fff",
-    borderBottom: "1px solid #eee",
-    padding: "12px 0",
-  },
-  container: {
-    width: "90%",
-    maxWidth: 1000,
-    margin: "0 auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  logo: {
-    margin: 0,
-    fontSize: 20,
-    color: "#222",
-  },
-  link: {
-    marginLeft: 16,
-    color: "#555",
-    textDecoration: "none",
-    fontSize: 14,
-  },
 };
 
 export default Header;

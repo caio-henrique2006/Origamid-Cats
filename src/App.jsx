@@ -5,6 +5,7 @@ import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { Register } from "./pages/Register";
 import { ProfileAdd } from "./pages/ProfileAdd";
+import "./style/body.css";
 
 function App() {
   return (

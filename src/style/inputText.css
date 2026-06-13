@@ -1,0 +1,21 @@
+.input-text__label {
+    margin-top: 8px;
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+
+.input-text__input {
+    width: 100%;
+	padding: 14px 16px;
+	background: #fff;
+    border-radius: 5px;
+    border: 1px solid #d6c8bc;
+	color: #1f1a16;
+	outline: none;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-text__input:focus {
+	border-color: #acacac;
+	box-shadow: 2px 2px 8px rgba(230, 230, 230, 0.8);
+}

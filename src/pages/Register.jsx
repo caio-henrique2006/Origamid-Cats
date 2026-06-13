@@ -3,6 +3,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Auth } from "../services/auth";
+import { InputText } from "../components/InputText";
+import { ConfirmButton } from "../components/ConfirmButton";
+import { Link } from "react-router-dom";
+import "../style/login.css";
 
 export const Register = () => {
   const auth = new Auth();
@@ -10,12 +14,10 @@ export const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !email || !password) return;
-    if (password !== confirm) return;
     try {
       await auth.register(email, password, name);
       console.log("Successful Register", { name, email });
@@ -35,53 +37,45 @@ export const Register = () => {
   }, []);
 
   return (
-    <section className="register">
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit} className="form">
-        <label>
-          Name
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </label>
-
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={6}
-          />
-        </label>
-
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            required
-            minLength={6}
-          />
-        </label>
-
-        <button type="submit">Create account</button>
-      </form>
-    </section>
+    <main className="login-page">
+      <section className="login-page__media" aria-hidden="true">
+        <img src="/register-side.jpg" alt="" />
+      </section>
+      <section className="login-page__content">
+        <div className="login-card">
+          <p className="login-card__eyebrow">Poste</p>
+          <h1>Registrar</h1>
+          <form className="login-form" onSubmit={handleSubmit}>
+            <InputText
+              label="Nome"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Seu nome"
+            />
+            <InputText
+              label="Email"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="suaConta@exemplo.com"
+            />
+            <InputText
+              label="Senha"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+            />
+            <ConfirmButton type="submit">Registrar-se</ConfirmButton>
+          </form>
+          <Link className="login-card__link" to="/login">
+            Já tenho uma conta
+          </Link>
+        </div>
+      </section>
+    </main>
   );
 };

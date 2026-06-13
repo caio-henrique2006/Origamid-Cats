@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Auth } from "../services/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { InputText } from "../components/InputText";
+import { ConfirmButton } from "../components/ConfirmButton";
+import "../style/login.css";
 
 export const Login = () => {
   const auth = new Auth();
@@ -33,29 +36,38 @@ export const Login = () => {
   }, []);
 
   return (
-    <section>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-      <Link to="/register">Register</Link>
-    </section>
+    <main className="login-page">
+      <section className="login-page__media" aria-hidden="true">
+        <img src="/login-side.jpg" alt="" />
+      </section>
+      <section className="login-page__content">
+        <div className="login-card">
+          <p className="login-card__eyebrow">Poste</p>
+          <h1>Login</h1>
+          <form className="login-form" onSubmit={handleSubmit}>
+            <InputText
+              label="Email"
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="suaConta@exemplo.com"
+            />
+            <InputText
+              label="Senha"
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+            />
+            <ConfirmButton type="submit">Login</ConfirmButton>
+          </form>
+          <Link className="login-card__link" to="/register">
+            Registrar-se
+          </Link>
+        </div>
+      </section>
+    </main>
   );
 };
